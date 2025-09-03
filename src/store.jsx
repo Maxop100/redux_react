@@ -32,7 +32,7 @@ const taskReducer = (state = initialState, action) => {
 export default taskReducer;
 
 
-const store = createStore(taskReducer);
+export const store = createStore(taskReducer);
 console.log(store);
 console.log(store.getState());
 
