@@ -1,31 +1,54 @@
+import { createStore } from "redux";
+
 /* eslint-disable no-case-declarations */
 const ADD_TASK = "task/add";
 const DEL_TASK = "task/del";
 
 const initialState = {
   task: [],
+  isLoading:false,
 };
 
 const taskReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_TASK: // use the constant instead of string
+    case ADD_TASK:
       return {
         ...state,
-        task: [...state.task, action.payload],
+        task: [...state.task, action.payload], // adds new task
       };
 
     case DEL_TASK:
-      const updatedTask = state.task.filter((curTask, index) => {
-        return index !== action.payload;
-      });
       return {
         ...state,
-        task: updatedTask,
+        task: state.task.filter((_, index) => index !== action.payload), 
+        // cleaner: use "_" since we don’t use the first param
       };
 
     default:
-     return state;
+      return state;
   }
 };
 
 export default taskReducer;
+
+
+const store = createStore(taskReducer);
+console.log(store);
+console.log(store.getState());
+
+
+
+
+store.dispatch({type:ADD_TASK,payload:"Learn Redux Toolkit"});
+console.log("updated state",store.getState());
+
+
+
+store.dispatch({type:ADD_TASK,payload:"buy mango"});
+console.log("updated state",store.getState());
+
+
+
+
+store.dispatch({type:DEL_TASK,payload:1});
+console.log("updated state",store.getState());
