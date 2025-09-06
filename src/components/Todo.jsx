@@ -1,4 +1,31 @@
+import { useState } from "react";
+import { MdDeleteForever } from "react-icons/md";
+import { useSelector,useDispatch } from "react-redux";
+import { addTask, delTask } from "../store";
 export const Todo = () => {
+  const [task,setTask]= useState("");
+
+  const tasks = useSelector((state) => state.task);
+
+  const dispatch = useDispatch();
+
+
+  const handleFormSubmit=(e)=>{
+    e.preventDefault();
+    dispatch(addTask(task));
+     return setTask('');
+  } 
+
+
+  const handleDelete=(index)=>{
+    return dispatch(delTask(index));
+  }
+
+
+
+
+
+  console.log(tasks);
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md bg-white shadow-lg rounded-2xl p-6">
@@ -8,13 +35,16 @@ export const Todo = () => {
         </h1>
 
         <div>
-          <form className="flex gap-2">
+          <form className="flex gap-2" onSubmit={handleFormSubmit}>
             <input
-              type="text"
-              placeholder="Enter a task..."
-              className="flex-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
+          value={task} // controlled input
+          onChange={(e) => setTask(e.target.value)}
+          type="text"
+          placeholder="Enter a task..."
+          className="flex-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
             <button
+            disabled={!task.trim()}
               type="submit"
               className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
             >
@@ -24,7 +54,18 @@ export const Todo = () => {
         </div>
 
         <ul id="task-list" className="mt-5 space-y-2">
-          
+          {
+            tasks.map((curTask,index)=>{
+              return (<li key={index} className="flex justify-between items-center bg-gray-50 p-3 rounded-lg shadow-sm hover:bg-gray-200 transition">
+                
+              <span className="text-gray-700 ">{index+1}:  {curTask}</span>
+              <button onClick={() => handleDelete(index)} className="text-red-500 hover:text-red-700">
+                <MdDeleteForever />
+              </button>
+            </li>
+              )
+            })
+          }
         </ul>
       </div>
     </div>

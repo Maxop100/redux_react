@@ -1,4 +1,5 @@
 import { createStore } from "redux";
+//import { composeWithDevTools } from '@redux-devtools/extension';
 
 /* eslint-disable no-case-declarations */
 const ADD_TASK = "task/add";
@@ -36,7 +37,7 @@ export const store = createStore(taskReducer);
 console.log(store);
 console.log(store.getState());
 
-const addTask =(data)=>{
+export const addTask =(data)=>{
   return {
     type: ADD_TASK,
     payload: data,
@@ -44,23 +45,17 @@ const addTask =(data)=>{
 }
 
 
-const delTask =(index)=>{
+export const delTask =(index)=>{
   return {
     type: DEL_TASK,
     payload: index,
   };
 }
 
-store.dispatch(addTask("buy apple"));
-console.log("updated state",store.getState());
 
 
-
-store.dispatch(addTask("buy mango"));
-console.log("updated state",store.getState());
-
-store.dispatch(delTask(0));
-console.log("updated state",store.getState());
+//store.dispatch(delTask(0));
+//console.log("updated state",store.getState());
 
 
 
