@@ -13,8 +13,9 @@ export const Todo = () => {
   const handleFormSubmit=(e)=>{
     e.preventDefault();
     dispatch(addTask(task));
-     return setTask('');
-  } 
+    setTask('');
+  }
+
 
 
   const handleDelete=(index)=>{
@@ -27,7 +28,7 @@ export const Todo = () => {
 
   console.log(tasks);
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex bg-gray-600 justify-center items-center min-h-screen">
       <div className="w-full max-w-md bg-white shadow-lg rounded-2xl p-6">
         <h1 className="text-2xl font-bold text-center text-gray-800 mb-4">
           <i className="fa-solid fa-list-check mr-2 text-blue-500"></i>
@@ -56,7 +57,7 @@ export const Todo = () => {
         <ul id="task-list" className="mt-5 space-y-2">
           {
             tasks.map((curTask,index)=>{
-              return (<li key={index} className="flex justify-between items-center bg-gray-50 p-3 rounded-lg shadow-sm hover:bg-gray-200 transition">
+              return (<li key={index}  className="flex justify-between items-center bg-gray-50 p-3 rounded-lg shadow-sm  hover:bg-red-200 transition">
                 
               <span className="text-gray-700 ">{index+1}:  {curTask}</span>
               <button onClick={() => handleDelete(index)} className="text-red-500 hover:text-red-700">

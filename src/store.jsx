@@ -1,5 +1,5 @@
 import { createStore } from "redux";
-//import { composeWithDevTools } from '@redux-devtools/extension';
+import { composeWithDevTools } from '@redux-devtools/extension';
 
 /* eslint-disable no-case-declarations */
 const ADD_TASK = "task/add";
@@ -33,9 +33,9 @@ const taskReducer = (state = initialState, action) => {
 export default taskReducer;
 
 
-export const store = createStore(taskReducer);
-console.log(store);
-console.log(store.getState());
+export const store = createStore(taskReducer,composeWithDevTools());
+//console.log(store);
+//console.log(store.getState());
 
 export const addTask =(data)=>{
   return {
