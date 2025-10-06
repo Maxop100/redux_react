@@ -1,9 +1,11 @@
-import { createStore } from "redux";
+import { createStore,applyMiddleware } from "redux";
 import { composeWithDevTools } from '@redux-devtools/extension';
+import {thunk} from "redux-thunk";
 
 /* eslint-disable no-case-declarations */
 const ADD_TASK = "task/add";
 const DEL_TASK = "task/del";
+const FETCH_TASK="task/fetch";
 
 const initialState = {
   task: [],
@@ -24,6 +26,11 @@ const taskReducer = (state = initialState, action) => {
         task: state.task.filter((_, index) => index !== action.payload), 
         // cleaner: use "_" since we don’t use the first param
       };
+    case FETCH_TASK:
+      return {
+        ...state,
+        task: [...state.task,...action.payload],
+      };
 
     default:
       return state;
@@ -33,7 +40,7 @@ const taskReducer = (state = initialState, action) => {
 export default taskReducer;
 
 
-export const store = createStore(taskReducer,composeWithDevTools());
+export const store = createStore(taskReducer,composeWithDevTools(applyMiddleware(thunk)));
 //console.log(store);
 //console.log(store.getState());
 
@@ -63,4 +70,15 @@ export const delTask =(index)=>{
 
 
 
-
+export const fetchTask=()=>{
+  return async (dispatch)=>{
+    try{
+      const res = await fetch("https://jsonplaceholder.typicode.com/todos?_limit=3");
+      const task = await res.json();
+      console.log(task);
+      dispatch({type:FETCH_TASK,payload:task.map(curTask=>curTask.title)});
+    }catch(error){
+      console.log(error);
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { MdDeleteForever } from "react-icons/md";
 import { useSelector,useDispatch } from "react-redux";
-import { addTask, delTask } from "../store";
+import { addTask, delTask, fetchTask } from "../store";
 export const Todo = () => {
   const [task,setTask]= useState("");
 
@@ -15,6 +15,11 @@ export const Todo = () => {
     dispatch(addTask(task));
     setTask('');
   }
+
+  const handleFetchTask=()=>{
+    dispatch(fetchTask());
+  }
+    
 
 
 
@@ -53,6 +58,10 @@ export const Todo = () => {
             </button>
           </form>
         </div>
+
+        <button className="mt-4 text-sm text-gray-500 hover:underline" onClick={handleFetchTask}>
+          Click for Sample Task
+        </button>
 
         <ul id="task-list" className="mt-5 space-y-2">
           {
